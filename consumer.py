@@ -1,6 +1,8 @@
 import pika
+import secret
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credentials = pika.PlainCredentials(secret.username, secret.password)
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', 5672, '/test', credentials))
 channel = connection.channel()
 
 channel.queue_declare(queue='post.create')
